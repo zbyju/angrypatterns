@@ -11,7 +11,3 @@ libraryDependencies ++= Seq(
 
 // Fork a new JVM for 'run' and 'test:run' to avoid JavaFX double initialization problems
 fork := true
-
-// set the main class for the main 'run' task
-// change Compile to Test to set it for 'test:run'
-Compile / run / mainClass := Some("fit.cvut.cz.GameScalaFxLauncher")

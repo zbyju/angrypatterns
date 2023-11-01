@@ -1,6 +1,4 @@
-package fit.cvut.cz
-
-import fit.cvut.cz.mvcgame.MvcGame
+import mvcgame.MvcGame
 /*
 import scalafx.application.JFXApp3
 import scalafx.geometry.Insets
@@ -24,10 +22,11 @@ import scalafx.scene.input.{KeyCode, KeyEvent}
 import scalafx.scene.layout.StackPane
 import scalafx.animation.AnimationTimer
 import scalafx.scene.paint.Color
-import fit.cvut.cz.mvcgame.config.MvcGameConfig
+import mvcgame.config.MvcGameConfig
 
 object GameScalaFxLauncher extends JFXApp3 {
 
+  val theMvcGame = new MvcGame()
   val winTitle = MvcGameConfig.GAME_TITLE
   val winWidth = MvcGameConfig.MAX_X
   val winHeight = MvcGameConfig.MAX_Y
@@ -56,8 +55,7 @@ object GameScalaFxLauncher extends JFXApp3 {
           children = new Group(canvas)
         }
 
-        println("mvcgame1")
-        val theMvcGame = new MvcGame(gc)
+        theMvcGame.setGraphicsContext(gc)
 
         val timer: AnimationTimer = AnimationTimer(t => {
           theMvcGame.processPressedKeys(pressedKeysCodes)

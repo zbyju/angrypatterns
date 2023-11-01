@@ -1,4 +1,4 @@
-package fit.cvut.cz.mvcgame.config
+package mvcgame.config
 
 object MvcGameConfig {
   val MAX_X: Int = 1920

@@ -1,6 +1,6 @@
-package fit.cvut.cz.mvcgame.model
+package mvcgame.model
 
-import fit.cvut.cz.mvcgame.model.Vector
+import mvcgame.model.Vector
 
 case class Position(var dimX: Int, var dimY: Int) {
   def add(vector: Vector): Unit = {

@@ -1,7 +1,7 @@
-package fit.cvut.cz.mvcgame.controller
+package mvcgame.controller
 
-import fit.cvut.cz.mvcgame.model.GameModel
-import fit.cvut.cz.mvcgame.config.MvcGameConfig
+import mvcgame.model.GameModel
+import mvcgame.config.MvcGameConfig
 import scala.collection.mutable.ArrayBuffer
 
 class GameController(val model: GameModel) {
@@ -11,6 +11,7 @@ class GameController(val model: GameModel) {
         case MvcGameConfig.UP_KEY   => model.moveCannonUp()
         case MvcGameConfig.DOWN_KEY => model.moveCannonDown()
         case MvcGameConfig.EXIT_KEY => System.exit(0)
+        case _                      =>
     )
   }
 }
