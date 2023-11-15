@@ -8,10 +8,13 @@ class GameController(val model: GameModel) {
   def processPressedKeys(pressedKeyCodes: ArrayBuffer[String]): Unit = {
     pressedKeyCodes.foreach(code =>
       code match
-        case MvcGameConfig.UP_KEY   => model.moveCannonUp()
-        case MvcGameConfig.DOWN_KEY => model.moveCannonDown()
-        case MvcGameConfig.EXIT_KEY => System.exit(0)
-        case _                      =>
+        case MvcGameConfig.UP_KEY    => model.moveCannonUp()
+        case MvcGameConfig.DOWN_KEY  => model.moveCannonDown()
+        case MvcGameConfig.SHOOT_KEY => model.shootCannon()
+        case MvcGameConfig.EXIT_KEY  => System.exit(0)
+        case _                       =>
     )
+    pressedKeyCodes.clear()
+    model.update()
   }
 }
