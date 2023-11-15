@@ -9,14 +9,8 @@ import mvcgame.model.GameModel
 import mvcgame.nullObject.Maybe
 import mvcgame.model.gameObjects.AbstractMissile
 
-object GameObjectFactoryA extends GameObjectFactory {
-  private var model: Maybe[GameModel] = Maybe.None
-
-  def apply(m: GameModel): GameObjectFactory = {
-    model = Maybe(m)
-    this
-  }
-
+class GameObjectFactoryA private (var model: GameModel)
+    extends GameObjectFactory {
   def createCannon(): AbstractCannon =
     new Cannon(
       new Position(MvcGameConfig.CANNON_POS_X, MvcGameConfig.CANNON_POS_Y),
@@ -25,9 +19,22 @@ object GameObjectFactoryA extends GameObjectFactory {
   def createMissile(): AbstractMissile =
     new Missile(
       new Position(
-        model.map(_.cannon.pos.dimX).getOrElse(0),
-        model.map(_.cannon.pos.dimY).getOrElse(0)
+        model.cannon.pos.dimX,
+        model.cannon.pos.dimY
       )
     );
+}
+
+object GameObjectFactoryA {
+  private var instance: Maybe[GameObjectFactoryA] = Maybe.None
+
+  def apply(model: GameModel): GameObjectFactoryA = instance match {
+    case Maybe.None => {
+      val i = new GameObjectFactoryA(model)
+      instance = Maybe.Some(i)
+      i
+    }
+    case Maybe.Some(i) => i
+  }
 
 }
