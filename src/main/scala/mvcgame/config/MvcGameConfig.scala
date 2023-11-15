@@ -16,4 +16,6 @@ object MvcGameConfig {
 
   val CANNON_IMAGE_RESOURCE = "/images/cannon.png"
   val MISSILE_IMAGE_RESOURCE = "/images/missile.png"
+
+  val CANNON_SOUND_RESOURCE = "src/main/resources/sounds/pewpew.m4a"
 }

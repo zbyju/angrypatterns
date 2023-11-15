@@ -11,8 +11,10 @@ import mvcgame.observer.MissileShot
 import mvcgame.observer.MissilesMoved
 import mvcgame.model.gameObjects.GameObject
 import mvcgame.abstractfactory.GameObjectFactoryA
+import mvcgame.visitor.GameObjectSounder
 
 class GameModel() extends Observable {
+  val sounder = GameObjectSounder()
   val gameObjectsFactory: GameObjectFactory = GameObjectFactoryA(this)
   val cannon: AbstractCannon = gameObjectsFactory.createCannon()
   var missiles = Seq[AbstractMissile]()
@@ -35,6 +37,7 @@ class GameModel() extends Observable {
   def shootCannon(): Unit = {
     val missile = this.cannon.shoot()
     missiles = missiles.appended(missile)
+    cannon.acceptVisitor(sounder)
     this.notifyObservers(MissileShot)
   }
 
