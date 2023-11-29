@@ -33,6 +33,8 @@ object MvcGameConfig {
   val POWER_DOWN_KEY = "A"
   val AIM_UP_KEY = "W"
   val AIM_DOWN_KEY = "S"
+  val ADD_MISSILE_KEY = "E"
+  val DEL_MISSILE_KEY = "Q"
 
   val MOVING_STRATEGY_KEY = "M";
   val SHOOTING_MODE_KEY = "N";

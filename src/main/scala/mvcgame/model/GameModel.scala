@@ -98,6 +98,14 @@ class GameModel() extends Observable {
     this.notifyObservers(ShootingModeChanged);
   }
 
+  def increaseMissileCount() = {
+    this.cannon.increaseMissileCount();
+    this.notifyObservers(ShootingModeChanged);
+  }
+  def decreaseMissileCount() = {
+    this.cannon.decreaseMissileCount();
+    this.notifyObservers(ShootingModeChanged);
+  }
   case class Memento(cannonPosX: Int, cannonPosY: Int)
 
   def createMemento(): Any = Memento(cannon.pos.dimX, cannon.pos.dimY);

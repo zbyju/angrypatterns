@@ -24,6 +24,8 @@ abstract class AbstractCannon(
   def shoot(): ListBuffer[AbstractMissile];
   def primitiveShoot(): Unit;
   def toggleShootingMode(): Unit;
+  def increaseMissileCount(): Unit;
+  def decreaseMissileCount(): Unit;
 
   override def acceptVisitor(visitor: GameObjectVisitor): Unit =
     visitor.visitCannon(this);
@@ -33,4 +35,5 @@ abstract class AbstractCannon(
 object AbstractCannon {
   val SINGLE_SHOOTING_MODE = SingleShootingMode()
   val DOUBLE_SHOOTING_MODE = DoubleShootingMode()
+  val DYNAMIC_SHOOTING_MODE = DynamicShootingMode(1)
 }
