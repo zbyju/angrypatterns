@@ -13,6 +13,11 @@ object MvcGameConfig {
   val MAX_POWER: Int = 50
   val MIN_POWER: Int = 1
 
+  val CIRCLE_SPEED_MULTIPLIER: Double = 0.25
+  val CIRCLE_GROWTH: Double = 1.2
+  val CIRCLE_RADIUS: Double = 5
+  val CIRCLE_FREQUENCY: Double = 1
+
   val GRAVITY: Double = 9.81
 
   val CANNON_POS_X: Int = MAX_X / 5
