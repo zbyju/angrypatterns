@@ -1,17 +1,4 @@
 import mvcgame.MvcGame
-/*
-import scalafx.application.JFXApp3
-import scalafx.geometry.Insets
-import scalafx.scene.Scene
-import scalafx.scene.effect.DropShadow
-import scalafx.scene.layout.HBox
-import scalafx.scene.paint.Color._
-import scalafx.scene.paint._
-import scalafx.scene.text.Text
-import scalafx.scene.canvas.Canvas
-import scala.collection.mutable.ArrayBuffer
-import javafx.animation.AnimationTimer
- */
 import scalafx.Includes._
 import scalafx.scene.Group
 import scalafx.application.JFXApp3
@@ -41,7 +28,6 @@ object GameScalaFxLauncher extends JFXApp3 {
 
         onKeyPressed = (e: KeyEvent) => {
           val code = e.getCode.toString
-          // only add once... prevent duplicates
           if (!pressedKeysCodes.contains(code))
             pressedKeysCodes += code
         }
