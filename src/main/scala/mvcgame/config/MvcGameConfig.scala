@@ -3,7 +3,18 @@ package mvcgame.config
 object MvcGameConfig {
   val MAX_X: Int = 1920
   val MAX_Y: Int = 1080
+
   val MOVE_STEP: Int = 10
+  val ANGLE_STEP: Double = Math.PI / 10
+  val POWER_STEP: Int = 1
+
+  val INIT_ANGLE: Double = 0
+  val INIT_POWER: Int = 10
+  val MAX_POWER: Int = 50
+  val MIN_POWER: Int = 1
+
+  val GRAVITY: Double = 9.81
+
   val CANNON_POS_X: Int = MAX_X / 5
   val CANNON_POS_Y: Int = MAX_Y / 2
 
@@ -13,6 +24,15 @@ object MvcGameConfig {
   val DOWN_KEY = "DOWN"
   val EXIT_KEY = "ESCAPE"
   val SHOOT_KEY = "SPACE"
+  val POWER_UP_KEY = "D"
+  val POWER_DOWN_KEY = "A"
+  val AIM_UP_KEY = "W"
+  val AIM_DOWN_KEY = "S"
+
+  val MOVING_STRATEGY_KEY = "M";
+  val SHOOTING_MODE_KEY = "N";
+  val STORE_SNAPSHOT_KEY = "B";
+  val RESTORE_SNAPSHOT_KEY = "V";
 
   val CANNON_IMAGE_RESOURCE = "/images/cannon.png"
   val MISSILE_IMAGE_RESOURCE = "/images/missile.png"

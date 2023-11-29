@@ -11,9 +11,10 @@ import scalafx.scene.media.MediaPlayer
 import java.io.File
 
 class GameObjectSounder() extends GameObjectVisitor {
+  val musicFile = MvcGameConfig.CANNON_SOUND_RESOURCE
+  val sound = new Media(new File(musicFile).toURI().toString());
+
   override def visitCannon(cannon: AbstractCannon): Unit = {
-    val musicFile = MvcGameConfig.CANNON_SOUND_RESOURCE
-    val sound = new Media(new File(musicFile).toURI().toString());
     val mediaPlayer = new MediaPlayer(sound);
     mediaPlayer.play();
   }

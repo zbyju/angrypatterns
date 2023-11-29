@@ -1,5 +1,7 @@
 package mvcgame.nullObject
 
+import java.{util => ju}
+
 enum Maybe[+A] {
   case Some(value: A)
   case None
@@ -19,6 +21,11 @@ enum Maybe[+A] {
     case None    => None
   }
 
+  def get: A = this match {
+    case Some(a) => a
+    case None    => throw ju.NoSuchElementException("None.get")
+  }
+
   def getOrElse[B >: A](default: B): B = this match {
     case Some(a) => a
     case None    => default
@@ -28,6 +35,8 @@ enum Maybe[+A] {
     case Some(_) => false
     case None    => true
   }
+
+  def isDefined: Boolean = !isEmpty
 }
 
 object Maybe {

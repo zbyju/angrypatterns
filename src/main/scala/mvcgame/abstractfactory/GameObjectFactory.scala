@@ -5,5 +5,5 @@ import mvcgame.model.gameObjects.AbstractMissile
 
 trait GameObjectFactory {
   def createCannon(): AbstractCannon;
-  def createMissile(): AbstractMissile;
+  def createMissile(initAngle: Double, initVelocity: Int): AbstractMissile;
 }

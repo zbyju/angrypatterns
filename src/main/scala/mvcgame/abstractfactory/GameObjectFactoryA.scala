@@ -16,12 +16,15 @@ class GameObjectFactoryA private (var model: GameModel)
       new Position(MvcGameConfig.CANNON_POS_X, MvcGameConfig.CANNON_POS_Y),
       this
     );
-  def createMissile(): AbstractMissile =
+  def createMissile(initAngle: Double, initVelocity: Int): AbstractMissile =
     new Missile(
       new Position(
         model.cannon.pos.dimX,
         model.cannon.pos.dimY
-      )
+      ),
+      initAngle,
+      initVelocity,
+      model.movingStrategy
     );
 }
 
