@@ -18,6 +18,8 @@ class GameController(val model: GameModel) {
         case MvcGameConfig.POWER_DOWN_KEY       => model.cannonPowerDown()
         case MvcGameConfig.MOVING_STRATEGY_KEY  => model.toggleMovingStrategy()
         case MvcGameConfig.SHOOTING_MODE_KEY    => model.toggleShootingMode()
+        case MvcGameConfig.ADD_MISSILE_KEY      => model.increaseMissileCount()
+        case MvcGameConfig.DEL_MISSILE_KEY      => model.decreaseMissileCount()
         case MvcGameConfig.STORE_SNAPSHOT_KEY   => CareTaker().createMemento()
         case MvcGameConfig.RESTORE_SNAPSHOT_KEY => CareTaker().setMemento()
         case MvcGameConfig.EXIT_KEY             => System.exit(0)

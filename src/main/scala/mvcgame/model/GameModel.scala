@@ -15,13 +15,24 @@ import mvcgame.visitor.GameObjectSounder
 import mvcgame.strategy.MovingStrategy
 import mvcgame.strategy.SimpleMovingStrategy
 import mvcgame.strategy.RealisticMovingStrategy
+import mvcgame.strategy.RandomMovingStrategy
+import mvcgame.strategy.CircleMovingStrategy
 
 class GameModel() extends Observable {
   val sounder = GameObjectSounder()
   val gameObjectsFactory: GameObjectFactory = GameObjectFactoryA(this)
   val cannon: AbstractCannon = gameObjectsFactory.createCannon()
   var missiles = Seq[AbstractMissile]()
-  var movingStrategy: MovingStrategy = SimpleMovingStrategy()
+
+  var movingStrategies: Seq[MovingStrategy] = Seq(
+    SimpleMovingStrategy(),
+    RealisticMovingStrategy(),
+    RandomMovingStrategy(),
+    CircleMovingStrategy()
+  )
+  var movingStrategyIndex = 0
+  def movingStrategy: MovingStrategy = movingStrategies(movingStrategyIndex)
+
   def gameObjects = Seq[GameObject](cannon) ++ missiles
 
   def update(): Unit = {
@@ -79,17 +90,22 @@ class GameModel() extends Observable {
       .filter(_.pos.dimX < MvcGameConfig.MAX_X)
   }
 
-  def toggleMovingStrategy(): Unit = movingStrategy match {
-    case _: SimpleMovingStrategy => movingStrategy = RealisticMovingStrategy()
-    case _: RealisticMovingStrategy => movingStrategy = SimpleMovingStrategy()
-    case _: MovingStrategy          => movingStrategy = SimpleMovingStrategy()
-  }
+  def toggleMovingStrategy(): Unit =
+    movingStrategyIndex = (movingStrategyIndex + 1) % movingStrategies.length
 
   def toggleShootingMode() = {
     this.cannon.toggleShootingMode();
     this.notifyObservers(ShootingModeChanged);
   }
 
+  def increaseMissileCount() = {
+    this.cannon.increaseMissileCount();
+    this.notifyObservers(ShootingModeChanged);
+  }
+  def decreaseMissileCount() = {
+    this.cannon.decreaseMissileCount();
+    this.notifyObservers(ShootingModeChanged);
+  }
   case class Memento(cannonPosX: Int, cannonPosY: Int)
 
   def createMemento(): Any = Memento(cannon.pos.dimX, cannon.pos.dimY);

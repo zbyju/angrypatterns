@@ -38,7 +38,21 @@ class Cannon(override val pos: Position, override val gof: GameObjectFactory)
     case _: SingleShootingMode =>
       shootingMode = AbstractCannon.DOUBLE_SHOOTING_MODE
     case _: DoubleShootingMode =>
+      shootingMode = AbstractCannon.DYNAMIC_SHOOTING_MODE
+    case _: DynamicShootingMode =>
       shootingMode = AbstractCannon.SINGLE_SHOOTING_MODE
     case _: ShootingMode => shootingMode = AbstractCannon.SINGLE_SHOOTING_MODE
+  }
+
+  def increaseMissileCount(): Unit = shootingMode match {
+    case s: DynamicShootingMode if s.numberOfMissiles <= 10 =>
+      shootingMode = DynamicShootingMode(s.numberOfMissiles + 1)
+    case _ =>
+  }
+
+  def decreaseMissileCount(): Unit = shootingMode match {
+    case s: DynamicShootingMode if s.numberOfMissiles > 1 =>
+      shootingMode = DynamicShootingMode(s.numberOfMissiles - 1)
+    case _ =>
   }
 }
