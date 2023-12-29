@@ -10,6 +10,7 @@ import scalafx.scene.layout.StackPane
 import scalafx.animation.AnimationTimer
 import scalafx.scene.paint.Color
 import mvcgame.config.MvcGameConfig
+import mvcgame.bridge.{ScalaFxGraphics, GameGraphics}
 
 object GameScalaFxLauncher extends JFXApp3 {
 
@@ -23,7 +24,9 @@ object GameScalaFxLauncher extends JFXApp3 {
       title = winTitle
       scene = new Scene(winWidth, winHeight) {
         val canvas = new Canvas(winWidth, winHeight)
-        val gc = canvas.graphicsContext2D
+        val gameGraphics = new GameGraphics(
+          new ScalaFxGraphics(canvas.graphicsContext2D)
+        )
         val pressedKeysCodes = scala.collection.mutable.ArrayBuffer[String]()
 
         onKeyPressed = (e: KeyEvent) => {
@@ -41,7 +44,7 @@ object GameScalaFxLauncher extends JFXApp3 {
           children = new Group(canvas)
         }
 
-        theMvcGame.setGraphicsContext(gc)
+        theMvcGame.setGameGraphics(gameGraphics)
 
         val timer: AnimationTimer = AnimationTimer(t => {
           theMvcGame.processPressedKeys(pressedKeysCodes)

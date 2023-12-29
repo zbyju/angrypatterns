@@ -38,8 +38,7 @@ object MvcGameConfig {
 
   val MOVING_STRATEGY_KEY = "M";
   val SHOOTING_MODE_KEY = "N";
-  val STORE_SNAPSHOT_KEY = "B";
-  val RESTORE_SNAPSHOT_KEY = "V";
+  val UNDO_LAST_COMMAND_KEY = "B";
 
   val CANNON_IMAGE_RESOURCE = "/images/cannon.png"
   val MISSILE_IMAGE_RESOURCE = "/images/missile.png"

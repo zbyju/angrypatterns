@@ -6,30 +6,29 @@ import mvcgame.model.gameObjects.AbstractCannon
 import mvcgame.model.gameObjects.AbstractMissile
 import scalafx.scene.image.Image
 import mvcgame.config.MvcGameConfig
+import mvcgame.bridge.GameGraphics
 
 class GameObjectRenderer() extends GameObjectVisitor {
-  private var gc: Maybe[GraphicsContext] = Maybe.None
+  private var gameGraphics: Maybe[GameGraphics] = Maybe.None
 
-  def setGraphicsContext(gc: GraphicsContext): Unit = {
-    this.gc = Maybe.Some(gc)
+  def setGameGraphics(gameGraphics: GameGraphics): Unit = {
+    this.gameGraphics = Maybe.Some(gameGraphics)
   }
 
   override def visitCannon(cannon: AbstractCannon): Unit = {
-    this.gc(
+    this.gameGraphics(
       _.drawImage(
-        new Image(MvcGameConfig.CANNON_IMAGE_RESOURCE),
-        cannon.pos.dimX,
-        cannon.pos.dimY
+        MvcGameConfig.CANNON_IMAGE_RESOURCE,
+        cannon.pos
       )
     )
   }
 
   override def visitMissile(missile: AbstractMissile): Unit = {
-    this.gc(
+    this.gameGraphics(
       _.drawImage(
-        new Image(MvcGameConfig.MISSILE_IMAGE_RESOURCE),
-        missile.pos.dimX,
-        missile.pos.dimY
+        MvcGameConfig.MISSILE_IMAGE_RESOURCE,
+        missile.pos
       )
     )
   }

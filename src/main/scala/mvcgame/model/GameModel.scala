@@ -15,106 +15,41 @@ import mvcgame.visitor.GameObjectSounder
 import mvcgame.strategy.MovingStrategy
 import mvcgame.strategy.SimpleMovingStrategy
 import mvcgame.strategy.RealisticMovingStrategy
-import mvcgame.strategy.RandomMovingStrategy
+import mvcgame.command.AbstractGameCommand
 import mvcgame.strategy.CircleMovingStrategy
+import mvcgame.strategy.RandomMovingStrategy
 
-class GameModel() extends Observable {
-  val sounder = GameObjectSounder()
-  val gameObjectsFactory: GameObjectFactory = GameObjectFactoryA(this)
-  val cannon: AbstractCannon = gameObjectsFactory.createCannon()
-  var missiles = Seq[AbstractMissile]()
+trait GameModel() extends Observable {
+  val cannon: AbstractCannon
+  var missiles: Seq[AbstractMissile]
+  def gameObjects: Seq[GameObject]
 
-  var movingStrategies: Seq[MovingStrategy] = Seq(
+  protected var movingStrategyIndex: Int = 0
+  protected val movingStrategies: Seq[MovingStrategy] = Seq(
     SimpleMovingStrategy(),
     RealisticMovingStrategy(),
     RandomMovingStrategy(),
     CircleMovingStrategy()
   )
-  var movingStrategyIndex = 0
-  def movingStrategy: MovingStrategy = movingStrategies(movingStrategyIndex)
+  def movingStrategy: MovingStrategy
 
-  def gameObjects = Seq[GameObject](cannon) ++ missiles
+  def update(): Unit
+  def moveCannonUp(): Unit
+  def moveCannonDown(): Unit
+  def aimCannonUp(): Unit
+  def aimCannonDown(): Unit
+  def cannonPowerUp(): Unit
+  def cannonPowerDown(): Unit
+  def increaseMissileCount(): Unit
+  def decreaseMissileCount(): Unit
+  def shootCannon(): Unit
+  def moveMissiles(): Unit
+  def toggleMovingStrategy(): Unit
+  def toggleShootingMode(): Unit
 
-  def update(): Unit = {
-    moveMissiles()
-  }
+  def registerCommand(command: AbstractGameCommand): Unit
+  def undoLastCommand(): Unit
 
-  def moveCannonUp(): Unit = {
-    this.cannon.moveUp()
-    this.notifyObservers(CannonMoved)
-  }
-
-  def moveCannonDown(): Unit = {
-    this.cannon.moveDown()
-    this.notifyObservers(CannonMoved)
-  }
-
-  def aimCannonUp(): Unit = {
-    this.cannon.aimUp()
-    this.notifyObservers(CannonAimChanged)
-  }
-
-  def aimCannonDown(): Unit = {
-    this.cannon.aimDown()
-    this.notifyObservers(CannonAimChanged)
-  }
-
-  def cannonPowerUp(): Unit = {
-    this.cannon.powerUp()
-    this.notifyObservers(CannonPowerChanged)
-  }
-
-  def cannonPowerDown(): Unit = {
-    this.cannon.powerDown()
-    this.notifyObservers(CannonPowerChanged)
-
-  }
-
-  def shootCannon(): Unit = {
-    val ms = this.cannon.shoot()
-    missiles = missiles.appendedAll(ms)
-    cannon.acceptVisitor(sounder)
-    this.notifyObservers(MissileShot)
-  }
-
-  def moveMissiles(): Unit = {
-    if (missiles.length > 0) {
-      this.missiles.foreach(_.move());
-      this.destroyMissiles();
-      this.notifyObservers(MissilesMoved);
-    }
-  }
-
-  private def destroyMissiles(): Unit = {
-    missiles = missiles
-      .filter(_.pos.dimX < MvcGameConfig.MAX_X)
-  }
-
-  def toggleMovingStrategy(): Unit =
-    movingStrategyIndex = (movingStrategyIndex + 1) % movingStrategies.length
-
-  def toggleShootingMode() = {
-    this.cannon.toggleShootingMode();
-    this.notifyObservers(ShootingModeChanged);
-  }
-
-  def increaseMissileCount() = {
-    this.cannon.increaseMissileCount();
-    this.notifyObservers(ShootingModeChanged);
-  }
-  def decreaseMissileCount() = {
-    this.cannon.decreaseMissileCount();
-    this.notifyObservers(ShootingModeChanged);
-  }
-  case class Memento(cannonPosX: Int, cannonPosY: Int)
-
-  def createMemento(): Any = Memento(cannon.pos.dimX, cannon.pos.dimY);
-
-  def setMemento(memento: Any): Any = memento match {
-    case m: Memento => {
-      cannon.pos.dimX = m.cannonPosX;
-      cannon.pos.dimY = m.cannonPosY;
-    }
-    case _ => throw new IllegalArgumentException()
-  }
+  def createMemento(): Any
+  def setMemento(memento: Any): Any
 }

@@ -7,7 +7,6 @@ import mvcgame.model.GameModel
 import mvcgame.observer.CannonMoved
 import scala.util.Try
 
-// Create a test class that extends AnyFlatSpec and Matchers
 class GameObjectFactoryATest extends AnyFlatSpec with Matchers {
   "GameObjectFactoryA" should "always just create one instance" in {
     val model = GameModel()
